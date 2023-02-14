@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from rest_framework import status
 from rest_framework import permissions
 from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, get_object_or_404
 from rest_framework.response import Response
 from .serializers import SignupSerializer, SuggestionUserSerializer
 
@@ -27,7 +27,7 @@ class SuggestionListAPIView(ListAPIView):
             super()
             .get_queryset()
             .exclude(pk=self.request.user.pk)
-            .exclude(pk__in=self.request.user.following_set)
+            .exclude(pk__in=self.request.user.following_set.all())
         )
         return qs
 

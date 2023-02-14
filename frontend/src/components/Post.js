@@ -5,7 +5,7 @@ import { HeartOutlined, HeartFilled, UserOutlined } from "@ant-design/icons";
 function Post({ post }) {
   const { caption, location, photo } = post;
   return (
-    <div>
+    <div className="post">
       <Card
         hoverable
         cover={<img src={photo} alt={caption} />}
