@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Axios from "axios";
-import Post from "Post";
+import Post from "./Post";
 
 const apiUrl = "http://localhost:8000/api/posts/";
 
