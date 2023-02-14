@@ -70,6 +70,9 @@ function Signup() {
           { required: true, message: "Please input your username!" },
           { min: 5, message: "5글자 입력해주세요." },
         ]}
+        hasFeedback
+        {...fieldErrors.username}
+        {...fieldErrors.non_field_errors}
       >
         <Input />
       </Form.Item>
@@ -78,6 +81,7 @@ function Signup() {
         label="Password"
         name="password"
         rules={[{ required: true, message: "Please input your password!" }]}
+        {...fieldErrors.password}
       >
         <Input.Password />
       </Form.Item>
@@ -94,10 +98,6 @@ function Signup() {
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
-};
-
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
 };
 
 export default Signup;
