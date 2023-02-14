@@ -27,11 +27,19 @@ function SuggestionList({ style }) {
   }, [originUserList]);
 
   const onFollowUser = (username) => {
-    setUserList((prevUserList) =>
-      prevUserList.map((user) =>
-        user.username !== username ? user : { ...user, is_follow: true }
-      )
-    );
+    const data = { username };
+    const config = { headers };
+    Axios.post("http://localhost:8000/accounts/follow/", data, config)
+      .then((response) => {
+        setUserList((prevUserList) =>
+          prevUserList.map((user) =>
+            user.username !== username ? user : { ...user, is_follow: true }
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
