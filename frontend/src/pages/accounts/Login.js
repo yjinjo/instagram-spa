@@ -4,11 +4,12 @@ import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
 
-import useLocalStorage from "../utils/useLocalStorage";
+import { setToken, useAppContext } from "../../store";
 
 function Login() {
+  const { dispatch } = useAppContext();
   const history = useHistory();
-  const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", "");
+  // const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", "");
   const [fieldErrors, setFieldErrors] = useState({});
 
   const onFinish = (values) => {
@@ -27,7 +28,8 @@ function Login() {
           data: { token: jwtToken },
         } = response;
 
-        setJwtToken(jwtToken);
+        dispatch(setToken(jwtToken));
+        // setJwtToken(jwtToken);
 
         notification.open({
           message: "로그인 성공",
