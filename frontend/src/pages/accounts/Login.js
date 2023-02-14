@@ -5,12 +5,18 @@ import { useHistory } from "react-router-dom";
 import Axios from "axios";
 
 import { setToken, useAppContext } from "../../store";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 function Login() {
   const { dispatch } = useAppContext();
+  const location = useLocation();
   const history = useHistory();
   // const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", "");
   const [fieldErrors, setFieldErrors] = useState({});
+
+  const { from: loginRedirectUrl } = location.state || {
+    from: { pathname: "/" },
+  };
 
   const onFinish = (values) => {
     async function fn() {
@@ -36,7 +42,7 @@ function Login() {
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
         });
 
-        // history.push("/accounts/login");  // TODO: 이동 주소
+        history.push(loginRedirectUrl); // TODO: 이동 주소
       } catch (error) {
         if (error.response) {
           notification.open({
