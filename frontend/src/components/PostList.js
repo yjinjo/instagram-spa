@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Post from "./Post";
 
@@ -9,12 +9,12 @@ function PostList() {
 
   useEffect(() => {
     Axios.get(apiUrl)
-      .then(response => {
+      .then((response) => {
         const { data } = response;
         console.log("loaded response :", response);
         setPostList(data);
       })
-      .catch(error => {
+      .catch((error) => {
         // error.response;
       });
     console.log("mounted");
@@ -22,10 +22,11 @@ function PostList() {
 
   return (
     <div>
-      <h2>PostList</h2>
-      {postList.map((post) => <Post post={post} key={post.id} />)}
+      {postList.map((post) => (
+        <Post post={post} key={post.id} />
+      ))}
     </div>
-  )
+  );
 }
 
 export default PostList;
