@@ -4,36 +4,33 @@ import "./SuggestionList.scss";
 import Suggestion from "./Suggestion";
 import Axios from "axios";
 import { useAppContext } from "../store";
+import useAxios from "axios-hooks";
 
 function SuggestionList({ style }) {
   const {
     store: { jwtToken },
   } = useAppContext();
-  const [userList, setUserList] = useState([]);
 
-  useEffect(() => {
-    async function fetchUserList() {
-      const apiUrl = "http://localhost:8000/accounts/suggestions/";
-      const headers = { Authorization: `JWT ${jwtToken}` };
-      try {
-        const { data } = await Axios.get(apiUrl, { headers });
-        setUserList(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  const headers = { Authorization: `JWT ${jwtToken}` };
 
-    fetchUserList();
-  }, []);
+  const [{ data: userList, loading, error }, refetch] = useAxios({
+    url: "http://localhost:8000/accounts/suggestions/",
+    headers,
+  });
+
   return (
     <div style={style}>
+      {loading && <div>Loading ...</div>}
+      {error && <div>로딩 중에 에러가 발생했습니다.</div>}
+
       <Card title="Suggestions for you " size="small">
-        {userList.map((suggestionUser) => (
-          <Suggestion
-            key={suggestionUser.username}
-            suggestionUser={suggestionUser}
-          />
-        ))}
+        {userList &&
+          userList.map((suggestionUser) => (
+            <Suggestion
+              key={suggestionUser.username}
+              suggestionUser={suggestionUser}
+            />
+          ))}
       </Card>
     </div>
   );
