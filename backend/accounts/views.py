@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from rest_framework import permissions
-from rest_framework.generics import CreateAPIView
-from .serializers import SignupSerializer
+from rest_framework.generics import CreateAPIView, ListAPIView
+from .serializers import SignupSerializer, SuggestionUserSerializer
 
 
 class SignUpView(CreateAPIView):
@@ -13,3 +13,8 @@ class SignUpView(CreateAPIView):
     permission_classes = [
         permissions.AllowAny,  # 회원 가입시에는 누구나 접속할 수 있어야 합니다.
     ]
+
+
+class SuggestionListAPIView(ListAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = SuggestionUserSerializer
