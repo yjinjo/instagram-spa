@@ -16,6 +16,11 @@ import os
 
 load_dotenv()
 
+import collections
+
+if not hasattr(collections, "Callable"):
+    collections.Callable = collections.abc.Callable
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -44,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third party apps
     "corsheaders",
+    "django_pydenticon",
     "rest_framework",
     # local apps
     "accounts",
