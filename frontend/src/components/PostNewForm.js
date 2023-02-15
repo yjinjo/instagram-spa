@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Button, Card, Form, Input, Modal, notification, Upload } from "antd";
+import { Button, Form, Input, Modal, notification, Upload } from "antd";
 import { FrownOutlined, PlusOutlined } from "@ant-design/icons";
 import { getBase64FromFile } from "../utils/base64";
 import { useAppContext } from "../store";
-import Axios from "axios";
 import parseErrorMessage from "../utils/forms";
 import { useHistory } from "react-router-dom";
+import { axiosInstance } from "../api";
 
 function PostNewForm() {
   const {
@@ -54,13 +54,9 @@ function PostNewForm() {
     const headers = { Authorization: `JWT ${jwtToken}` };
 
     try {
-      const response = await Axios.post(
-        "http://localhost:8000/api/posts/",
-        formData,
-        {
-          headers,
-        }
-      );
+      const response = await axiosInstance.post("/api/posts/", formData, {
+        headers,
+      });
       console.log("success response: ", response);
       history.push("/");
     } catch (error) {

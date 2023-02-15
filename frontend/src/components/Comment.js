@@ -16,7 +16,8 @@ export default function Comment({ comment }) {
       avatar={
         <Avatar
           // FIXME: avatar_url에 host지정
-          src={"http://localhost:8000" + avatar_url}
+          // src={"http://localhost:8000" + avatar_url}
+          src={avatar_url}
           alt={displayName}
         />
       }

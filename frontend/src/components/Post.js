@@ -29,7 +29,8 @@ function Post({ post, handleLike }) {
               size="large"
               icon={
                 <img
-                  src={`http://localhost:8000` + avatar_url}
+                  // src={`http://localhost:8000` + avatar_url}
+                  src={avatar_url}
                   alt={username}
                 />
               }

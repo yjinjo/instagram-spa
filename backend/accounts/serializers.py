@@ -1,3 +1,5 @@
+import re
+
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
@@ -24,6 +26,17 @@ class SignupSerializer(serializers.ModelSerializer):
 
 
 class SuggestionUserSerializer(serializers.ModelSerializer):
+    avatar_url = serializers.SerializerMethodField("avatar_url_field")
+
+    def avatar_url_field(self, author):
+        if re.match(r"^https?://", author.avatar_url):
+            return author.avatar_url
+
+        if "request" in self.context:
+            scheme = self.context["request"].scheme  # 'http' or 'https
+            host = self.context["request"].get_host()
+            return scheme + "://" + host + author.avatar_url
+
     class Meta:
         model = User
         fields = ["username", "name", "avatar_url"]
